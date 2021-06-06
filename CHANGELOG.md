@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-## [3.7.1] - 20.11.2020
-
-* Bug fixes: Fix bug where removeListener was called on null [Issue #64](https://github.com/Dimibe/grouped_list/issues/64)
-=======
 ## [4.0.0] - 27.03.2020
 
 * Null safety
@@ -16,7 +11,6 @@
 ## [4.0.0-nullsafety.0] - 20.11.2020
 
 * New feature: Add support for null safety.
->>>>>>> 125f40a0fff6b4ffeea4bc11dad3a24bd22b860a
 
 ## [3.7.0] - 15.11.2020
 
