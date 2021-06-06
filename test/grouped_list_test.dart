@@ -19,14 +19,14 @@ void main() {
         body: Container(
           height: 550,
           child: GroupedListView(
-            groupBy: (element) => element['group'],
+            groupBy: (dynamic element) => element['group'],
             elements: _elements,
             useStickyGroupSeparators: false,
             reverse: reverse,
             order: GroupedListOrder.ASC,
-            groupSeparatorBuilder: (element) =>
+            groupSeparatorBuilder: (dynamic element) =>
                 Container(height: 50, child: Text('$element')),
-            itemBuilder: (_, element) => Container(
+            itemBuilder: (_, dynamic element) => Container(
               height: 100,
               child: Text(element['name']),
             ),
@@ -80,6 +80,6 @@ void main() {
   testWidgets('finds only one group separator per group',
       (WidgetTester tester) async {
     await tester.pumpWidget(_buildApp(_elements));
-    expect(find.text("Team B"), findsOneWidget);
+    expect(find.text('Team B'), findsOneWidget);
   });
 }
