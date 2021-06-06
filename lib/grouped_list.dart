@@ -297,11 +297,18 @@ class _GroupedListViewState<T, E> extends State<GroupedListView<T, E>> {
               );
             }
             if (_isSeparator(index)) {
-              var curr = widget.groupBy(_sortedElements[actualIndex]);
-              var prev = widget.groupBy(
-                  _sortedElements[actualIndex + (widget.reverse ? 1 : -1)]);
+              /// Handle case where elements are mutated such that
+              /// widget at desired index no longer defined
+              if (actualIndex + (widget.reverse ? 1 : 0) >=
+                  _sortedElements.length) return const SizedBox();
+
+              final actualWidget = _sortedElements[actualIndex];
+              final prevWidget =
+                  _sortedElements[actualIndex + (widget.reverse ? 1 : -1)];
+              var curr = widget.groupBy(actualWidget);
+              var prev = widget.groupBy(prevWidget);
               if (prev != curr) {
-                return _buildGroupSeparator(_sortedElements[actualIndex]);
+                return _buildGroupSeparator(actualWidget);
               }
               return widget.separator;
             }
