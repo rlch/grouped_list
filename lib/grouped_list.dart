@@ -52,8 +52,13 @@ class GroupedListView<T, E> extends StatefulWidget {
 
   /// Called to build children for the list with
   /// 0 <= element, index < elements.length
-  final Widget Function(BuildContext context, T element, int index)?
-      indexedItemBuilder;
+  final Widget Function(
+    BuildContext context,
+    T element,
+    int index, [
+    T? prev,
+    T? next,
+  ])? indexedItemBuilder;
 
   /// Whether the order of the list is ascending or descending.
   ///
@@ -331,12 +336,24 @@ class _GroupedListViewState<T, E> extends State<GroupedListView<T, E>> {
   Container _buildItem(context, int actualIndex) {
     var key = GlobalKey();
     _keys['$actualIndex'] = key;
+    final n = _sortedElements.length;
+    final prev = actualIndex + (widget.reverse ? 1 : -1);
+    final next = actualIndex + (widget.reverse ? -1 : 1);
+
+    final prevElement = prev < n && prev >= 0 ? _sortedElements[prev] : null;
+    final nextElement = next < n && next >= 0 ? _sortedElements[next] : null;
+
     return Container(
         key: key,
         child: widget.indexedItemBuilder == null
             ? widget.itemBuilder!(context, _sortedElements[actualIndex])
             : widget.indexedItemBuilder!(
-                context, _sortedElements[actualIndex], actualIndex));
+                context,
+                _sortedElements[actualIndex],
+                actualIndex,
+                prevElement,
+                nextElement,
+              ));
   }
 
   void _scrollListener() {
